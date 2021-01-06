@@ -21,17 +21,20 @@
 ## 主要功能：
 
 - [x] 测试接口连通性
+- [x] py版本对应tf版本脚本
 -  [ ] mysql 类编写
 
 ## 安装
 
 - 终端下执行:
-    ```git clone  https://github.com/FuJianTech/OIP.git
+    ```
+   git clone  https://github.com/FuJianTech/OIP.git
     ```
 
 - pip安装:
 
-    ```pip install -Ur requirements.txt
+    ```
+  pip install -Ur requirements.txt
     ```
 
 
@@ -91,7 +94,8 @@ Home directory 🙋‍♀️🙋‍♂️
 如果使用了虚拟环境,请切换到`python=3.9.0`(非必须选项)
 
  终端下执行:
-```python manger.py
+```
+python manger.py
 ```
 
 默认配置 `example`
@@ -116,6 +120,18 @@ Home directory 🙋‍♀️🙋‍♂️
 特别鸣谢
 
 Agnes Obel
+
+## CHANGELOG
+
+### [v1.0] 2021.01.06
+- 添加文件夹TS
+- tools (工具类/脚本)
+- 编写py版本对应tf版本脚本
+- 主要涵盖于py3.5 py3.6 py3.7 py3.8
+- 3.9 暂时pypi未更新  
+- 进度条包 tqdm 
+- 数据来源: https://pypi.org/project/tensorflow/#history  
+- 更新MIT许可证
 
 
 
