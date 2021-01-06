@@ -3,8 +3,9 @@
 import os
 import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)))
-from apps import little_config
 from apps.logic import create_app
+from apps import little_config
+
 
 port = int(little_config().get("project_port", 5010))
 app = create_app()
