@@ -1,7 +1,8 @@
 # !/bin/env python
 # -*- coding=utf-8 -*-
 import configparser
-import os,sys
+import os
+import sys
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir)))
 
 root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
@@ -38,5 +39,3 @@ def little_config():
 def get_config_value_by_key(config_sections, node_key, key=None):
     node_dict = config_sections.get(node_key, {})
     return node_dict.get(key) if key else node_dict
-
-
