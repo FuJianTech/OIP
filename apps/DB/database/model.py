@@ -11,10 +11,11 @@ Base = declarative_base()
 
 
 class User(Base):
-    __tablename__ = "user111"
+    __tablename__ = "user"
     id = Column(Integer, primary_key=True, autoincrement=True)
     name = Column(String(32))
     age = Column(String(32))
+    num = Column(Integer)
 
 
 init_data_url = 'sqlite:///' + os.path.join(os.path.abspath(os.path.dirname(__file__)), 'init_data.db')

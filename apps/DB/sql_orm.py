@@ -54,12 +54,13 @@ class OperateOrm(object):
         all_data = self.db_session.query(table).all()
         res_list = []
         for i in all_data:
-            tmp_data = dict(zip(i.__dict__.keys(), i.__dict__.values()))
+            # tmp_data = dict(zip(i.__dict__.keys(), i.__dict__.values()))
+            tmp_data = i.__dict__
             tmp_data.pop('_sa_instance_state')
             res_list.append(tmp_data)
         return res_list
 
-    def see_sql_sentence(self, table: str, filter=None) -> classmethod:
+    def see_sql_sentence(self, table: str, filter=None or str) -> classmethod:
         """
         :param table: USER
         :param filter: User.id >= 20  or  None
@@ -72,6 +73,36 @@ class OperateOrm(object):
             res = self.db_session.query(table)
             return res
 
+    def update_data(self, update_data_dict: dict) -> None:
+        """
+        :param update_one_data_dict:{"table": User, "filters": User.id == 1, "update_data": {'age': 'Mike'}}
+        :return: None
+        """
+        table, filters, update_data = update_data_dict.get("table"), update_data_dict.get("filters"), update_data_dict.get("update_data")
+        self.db_session.query(table).filter(filters).update(update_data)
+        self.db_session.commit()
+        return None
+
+    def update_data_add_str(self, update_data_dict: dict) -> None:
+        """
+        :param update_data_dict: {"table": User, "filters": User.id == 1, "update_data": {User.age: User.age + "626"}}
+        :return: None
+        """
+        table, filters, update_data = update_data_dict.get("table"), update_data_dict.get("filters"), update_data_dict.get("update_data")
+        self.db_session.query(table).filter(filters).update(update_data, synchronize_session=False)
+        self.db_session.commit()
+        return None
+
+    def update_data_num_operate(self, update_data_dict: dict) -> None:
+        """
+        :param update_data_dict: {"table": User, "filters": User.id == 3, "update_data": {User.num: User.num - 12}}
+        :return:
+        """
+        table, filters, update_data = update_data_dict.get("table"), update_data_dict.get("filters"), update_data_dict.get("update_data")
+        self.db_session.query(table).filter(filters).update(update_data, synchronize_session="evaluate")
+        self.db_session.commit()
+        return None
+
     def drop_db(self):
         """
         drop use111 table
@@ -82,7 +113,7 @@ class OperateOrm(object):
 
 if __name__ == '__main__':
 
-    add_one_str = User(name='one_data', age="19")
+    add_one_str = User(name='one_data', age="19", num=123)
     add_all_data_dict = {"table": User,
                          "add_all_data_list": [{'name': randint(1, 100), 'age': randint(1, 100)} for i in range(10000)]}
     OpOr = OperateOrm()
@@ -91,4 +122,14 @@ if __name__ == '__main__':
     # OpOr.select_one_data(User, User.id >= 20)
     # OpOr.select_all_data(User)
     # OpOr.see_sql_sentence(User, User.id <= 20)
+
+    # update_one_data_dict = {"table": User, "filters": User.id == 1, "update_data": {'name': "Jack"}}
+    # OpOr.update_data(update_one_data_dict)
+
+    # update_one_data_dict = {"table": User, "filters": User.id == 1, "update_data": {User.age: User.age + "626"}}
+    # OpOr.update_data_add_str(update_one_data_dict)
+
+    # update_one_data_dict = {"table": User, "filters": User.id == 3, "update_data": {User.num: User.num - 12}}
+    # OpOr.update_data_num_operate(update_one_data_dict)
+
     # OpOr.drop_db()
