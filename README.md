@@ -1,6 +1,6 @@
 # OIP
 🌍
-*[English](/docs/README-en.md) ∙ [简体中文](README.md)*
+*[English](/docs/README-en.md) ∙ [简体中文](README-en.md)*
 
 `python 3.9.0` `Flask 1.1.2`
 
@@ -132,6 +132,27 @@ Agnes Obel
 - 进度条包 tqdm 
 - 数据来源: https://pypi.org/project/tensorflow/#history  
 - 更新MIT许可证
+
+### [1.7] 2021.01.07
+- 添加文件夹DB/database
+- 添加文件DB/database/model.py
+- model.py 初始化数据库
+- init_data.db 初始化数据库指定路径
+- sql_orm.py sqlalchemy 封装sqlite数据库
+- 添加一条或多条数据
+- 筛选一条或多条数据
+- ORM 对应的原生SQL
+- 删除表  
+
+
+### [1.12] 2021.01.12
+- sql_orm.py sqlalchemy 封装sqlite数据库
+- 更新语句分类
+- 更新指定字段 
+- 更新字符串拼接
+- 更新数值运,支持加减操作
+- 初始化模型,添加num数值字段
+- 优化函数
 
 
 
