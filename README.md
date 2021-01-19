@@ -155,6 +155,13 @@ Agnes Obel
 - 优化函数
 
 
+### [1.19] 2021.01.19
+- 学习vue
+- 更新static文件夹 axios.min.js/vue.js
+- 更新templates文件夹 vue_demo.html
+- 添加蓝图 application_vue_demo
+- vue 界面展示 如下:
+![红尘](http://dorians.top/usr/uploads/2021/0119/无痕.png)
 
 
 
