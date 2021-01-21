@@ -164,4 +164,10 @@ Agnes Obel
 ![红尘](http://dorians.top/usr/uploads/2021/0119/无痕.png)
 
 
-
+### [1.21] 2021.01.21
+- 更新static文件夹uoloads
+- 重构application_vue_demo文件夹
+- 新增函数uppload 修改update函数
+- 修改vue_demo.html
+- 增减文件增删等按钮
+![红尘](http://dorians.top/usr/uploads/2021/0121/上传测试文件.png)
