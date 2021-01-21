@@ -115,7 +115,7 @@ python manger.py
 
 初代，佐非，赛文，杰克，艾斯，奥特之父，泰罗，奥特之母，雷欧，阿斯特拉，乔亚尼斯，爱迪，尤里安，察克，贝斯，史考特，葛雷，帕瓦特，哉阿斯，迪加，戴拿，盖亚，阿古茹，奈伊斯，奈欧斯，赛文，高斯，杰斯迪斯，雷杰多，博伊，黄金博伊，诺亚，奈科斯特，奈克伊斯，麦克斯，杰诺，梦比优斯，希卡利，赛文等家族成员支持
 
-(![红尘](http://dorians.top/usr/uploads/2021/0105/红尘.jpg)
+![红尘](http://dorians.top/usr/uploads/2021/0105/红尘.jpg)
 
 特别鸣谢
 
@@ -161,7 +161,7 @@ Agnes Obel
 - 更新templates文件夹 vue_demo.html
 - 添加蓝图 application_vue_demo
 - vue 界面展示 如下:
-![红尘](http://dorians.top/usr/uploads/2021/0119/无痕.png)
+![无痕](http://dorians.top/usr/uploads/2021/0119/无痕.png)
 
 
 ### [1.21] 2021.01.21
@@ -170,4 +170,4 @@ Agnes Obel
 - 新增函数uppload 修改update函数
 - 修改vue_demo.html
 - 增减文件增删等按钮
-![红尘](http://dorians.top/usr/uploads/2021/0121/上传测试文件.png)
+![上传测试文件](http://dorians.top/usr/uploads/2021/0121/balck_eys.png)
