@@ -7,5 +7,3 @@ from . import application_test
 @application_test.route("/test", methods=['GET'])
 def test():
     return jsonify({"data": "test blueprint"})
-
-

@@ -48,7 +48,7 @@ class OperateOrm(object):
     def select_all_data(self, table: str) -> list:
         """
         ORM to  list
-        :param table:
+        :param table: User
         :return:
         """
         all_data = self.db_session.query(table).all()
@@ -75,12 +75,13 @@ class OperateOrm(object):
 
     def update_data(self, update_data_dict: dict) -> None:
         """
-        :param update_one_data_dict:{"table": User, "filters": User.id == 1, "update_data": {'age': 'Mike'}}
+        :param update_one_data_dict:{"table": User, "filters": User.id == 1, "update_data": {'age': 'Mike','id':12}}
         :return: None
         """
         table, filters, update_data = update_data_dict.get("table"), update_data_dict.get("filters"), update_data_dict.get("update_data")
         self.db_session.query(table).filter(filters).update(update_data)
         self.db_session.commit()
+
         return None
 
     def update_data_add_str(self, update_data_dict: dict) -> None:
@@ -103,6 +104,16 @@ class OperateOrm(object):
         self.db_session.commit()
         return None
 
+    def delete_data(self, delete_data_dict: dict) -> None:
+        """
+        :param delete_data_dict:{"table": User, "filters": User.id == 1}
+        :return: None
+        """
+        table, filters = delete_data_dict.get("table"), delete_data_dict.get("filters")
+        self.db_session.query(table).filter(filters).delete()
+        self.db_session.commit()
+        return None
+
     def drop_db(self):
         """
         drop use111 table
@@ -112,10 +123,10 @@ class OperateOrm(object):
 
 
 if __name__ == '__main__':
-
-    add_one_str = User(name='one_data', age="19", num=123)
-    add_all_data_dict = {"table": User,
-                         "add_all_data_list": [{'name': randint(1, 100), 'age': randint(1, 100)} for i in range(10000)]}
+    # 此处注释代码,单独测试使用,引入会有重叠字段,aa_one_str等等
+    # add_one_str = User(name='one_data', age="19", num=123)
+    # add_all_data_dict = {"table": User,
+    #                      "add_all_data_list": [{'name': randint(1, 100), 'age': randint(1, 100)} for i in range(10000)]}
     OpOr = OperateOrm()
     # OpOr.add_one_data(add_one_str)
     # OpOr.add_all_data(add_all_data_dict)

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
 
@@ -8,102 +9,117 @@
     <!--    Axios 是一个基于 Promise 的 HTTP 库，可以用在浏览器和 node.js 中。-->
     <!--    使用 cdn:-->
     <!--    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
-    <script src="../static/vue.js"></script>
-    <script src="../static/axios.min.js"></script>
+    <script src="../static/js/vue.js"></script>
+    <script src="../static/js/axios.min.js"></script>
     <!-- 引入样式 -->
-    <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+    <link rel="stylesheet" href="../static/css/index.css">
     <!-- 引入组件库 -->
-    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <script src="../static/js/index.js"></script>
 
 </head>
+
 <body>
     <!-- 头部格式 -->
 
 
-<div id="app">
-    <!-- 这个id后面vue会用到 -->
+    <div id="app">
+        <!-- 这个id后面vue会用到 -->
 
-    <el-row :gutter="24">
-        <!-- 通过基础的 24 分栏，迅速简便地创建布局。 -->
-        <!-- 通过 row 和 col 组件，并通过 col 组件的 span 属性我们就可以自由地组合布局 -->
-        <el-col :span="10">
-            <!-- <el-input v-model="input" placeholder="请输入内容"></el-input> -->
-            <!-- searchData 用来接收用户在输入框中输入的数据 -->
-            <el-input v-model="searchData" placeholder="请输入内容"></el-input>
-        </el-col>
+        <el-row :gutter="24">
+            <!-- 通过基础的 24 分栏，迅速简便地创建布局。 -->
+            <!-- 通过 row 和 col 组件，并通过 col 组件的 span 属性我们就可以自由地组合布局 -->
+            <el-col :span="10">
+                <!-- <el-input v-model="input" placeholder="请输入内容"></el-input> -->
+                <!-- searchData 用来接收用户在输入框中输入的数据 -->
+                <el-input v-model="searchData" placeholder="请输入内容"></el-input>
+            </el-col>
 
 
-        <el-col :span="2">
-            <!-- @input 一般用于监听事件
+            <el-col :span="2">
+                <!-- @input 一般用于监听事件
             @click 事件触发事件  handleSearch
             <el-button type="primary">主要按钮</el-button>
             <el-button type="success">成功按钮</el-button> -->
-            <el-button type="primary" @click="handleSearch()">查询</el-button>
-        </el-col>
+                <el-button type="primary" @click="handleSearch()">查询</el-button>
+            </el-col>
 
 
-        <el-col :span="10">
-            <el-input v-model="addData" placeholder="请输入内容"></el-input>
-        </el-col>
-        <el-col :span="2">
-            <el-button type="primary" @click="handleAdd">添加</el-button>
-        </el-col>
-    </el-row>
+            <el-col :span="2" style="padding-left: 40%;">
+                <el-button type="primary" @click="handleAdd">添加</el-button>
+            </el-col>
+        </el-row>
 
-    <br>
-<!-- 中间行  区别于上面的,这是个表格-->
-    <template>
-        <!-- 当el-table元素中注入data对象数组后，
+        <br>
+        <!-- 中间行  区别于上面的,这是个表格-->
+        <template>
+            <!-- 当el-table元素中注入data对象数组后，
             在el-table-column中用prop属性来对应对象中的键名即可填入数据，
             用label属性来定义表格的列名。可以使用width属性来定义列宽。 -->
-        <el-table :data="tableData" border style="width: 100%">
-            <el-table-column prop="date" label="日期" width="200">
-            </el-table-column>
+            <el-table :data="tableData" border style="width: 100%">
+                <el-table-column prop="date" label="日期" width="200">
+                </el-table-column>
 
 
-            <el-table-column prop="mission" label="任务" width="600" >
-                <!-- 在 2.6.0 中，我们为具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令)。
+                <el-table-column prop="mission" label="任务" width="600">
+                    <!-- 在 2.6.0 中，我们为具名插槽和作用域插槽引入了一个新的统一的语法 (即 v-slot 指令)。
                     它取代了 slot 和 slot-scope 这两个目前已被废弃但未被移除且仍在文档中的 attribute
                     没看懂 好像是索引和下标-->
-                <template slot-scope="{row, $index}">
-                    <!-- 參考菜鳥教程: https://www.runoob.com/vue2/vue-if.html
+                    <template slot-scope="{row, $index}">
+                        <!-- 參考菜鳥教程: https://www.runoob.com/vue2/vue-if.html
                     如果为真的话,执行 v-model vue使用v-model实现这些标签数据的双向绑定，
                     它会根据控件类型自动选取正确的方法来更新元素
                     editable[$index]   {row, $index}  这两种类型现在还不是很理解,
                     拿到当前行的数据???
                     -->
-                    <span  v-if="editable[$index]">
-                        <!-- v-model 拿到数据,执行saveUpdate函数,传递的参数为索引和更新的数据
+                        <span v-if="editable[$index]">
+                            <!-- v-model 拿到数据,执行saveUpdate函数,传递的参数为索引和更新的数据
                             @blur 是当元素失去焦点时所触发的事件 -->
-                        <el-input v-model="updateData" @blur="saveUpdate($index)"></el-input>
-                    </span>
-                    <span v-else>
-                        <!-- 拿到当前行的数据/任务 -->
-                        ${ tableData[$index].mission }
-                    </span>
-                </template>
-            </el-table-column>
+                            <el-input v-model="updateData" @blur="saveUpdate($index)"></el-input>
+                        </span>
+                        <span v-else>
+                            <!-- 拿到当前行的数据/任务 -->
+                            ${ tableData[$index].mission }
+                        </span>
+                    </template>
+                </el-table-column>
 
-            <el-table-column prop="level" label="等级" width="200">
-                <template slot-scope="{row, $index}">
-                    <el-button type="text" @click="levelDown($index)">-</el-button>
-                    <!-- 为什么这里不是和上一个一样,使用v-else -->
-                    ${ tableData[$index].level }
-                    <el-button type="text" @click="levelUp($index)">+</el-button>
-                </template>
+                <el-table-column prop="level" label="等级" width="200">
+                    <template slot-scope="{row, $index}">
+                        <el-button type="text" @click="levelDown($index)">-</el-button>
+                        <!-- 为什么这里不是和上一个一样,使用v-else -->
+                        ${ tableData[$index].level }
+                        <el-button type="text" @click="levelUp($index)">+</el-button>
+                    </template>
 
-            </el-table-column>
+                </el-table-column>
 
-            <el-table-column fixed="right" label="操作" width="200">
-                <template slot-scope="scope">
-                    <el-button type="primary" size="small" @click="handleUpdate(scope.$index, tableData)">编辑</el-button>
-                    <el-button type="primary" size="small" @click="handleDelete(scope.$index, tableData)">删除</el-button>
-                </template>
-            </el-table-column>
-        </el-table>
-    </template>
-<!-- 标签 -->
-</div>
+                <el-table-column prop="level" label="文件" width="200">
+                    <template slot-scope="{row, $index}">
+
+                        <!-- 为什么这里不是和上一个一样,使用v-else -->
+                        ${ tableData[$index].pic_path}
+                    </template>
+
+                </el-table-column>
+
+
+                <el-table-column fixed="right" label="操作" width="600">
+                    <template slot-scope="scope">
+                        <el-button type="primary" size="small"
+                            @click.native.prevent="handleUpdate(scope.$index, tableData)">编辑</el-button>
+                        <el-button type="primary" size="small" @click.native.prevent="handleDelete(scope.row.id)">删除
+                        </el-button>
+                        <form action="/upload" enctype='multipart/form-data' method='POST'>
+                            <input type="file" name="file">
+                            <input type="submit" value="上传" style.display='none'>
+                            <!-- <el-button size="small" type="primary"
+                                @click.native.preven="uploadPic(scope.$index, tableData)">上传文件</el-button> -->
+                    </template>
+                </el-table-column>
+            </el-table>
+        </template>
+        <!-- 标签 -->
+    </div>
 </body>
 <!-- vue 入口 -->
 <script>
@@ -123,39 +139,26 @@
             updateData: '',
             searchData: '',
             getData: [],
-            tableData: [{
-                date: '2021-01-19',
-                mission: '昨天爱学习',
-                level: "SSS",
-            },{
-                date: '2021-01-19',
-                mission: '今天爱学习',
-                level: "SSS",
-            },{
-                date: '2021-01-19',
-                mission: '明天爱学习',
-                level: "SSS",
-            }], //初始化数据内容
-            editable: [false,], //编辑状态还是不太明白
+            tableData: [], //初始化数据内容
+            editable: [false, ], //编辑状态还是不太明白
             levelArr: ['SSS', 'SS', 'S', 'A', 'B'],
             searchResult: [],
             tempData: [],
         },
         methods: {
-            // 搜索查询
+            // 搜索查询     
             handleSearch() {
-                if(this.searchData == '') {
+                if (this.searchData == '') {
                     if (this.tempData != '') {
                         this.tableData = this.tempData;
                         this.tempData = [];
                         this.searchResult = [];
                     }
-                }
-                else {
+                } else {
                     let search = this.searchData;
-                    for(let i=0;i<this.tableData.length;i++) {
-                        for(let j=0;j<search.length;j++) {
-                            if(this.tableData[i].mission.indexOf(search[j]) > -1) {
+                    for (let i = 0; i < this.tableData.length; i++) {
+                        for (let j = 0; j < search.length; j++) {
+                            if (this.tableData[i].mission.indexOf(search[j]) > -1) {
                                 this.searchResult.push(this.tableData[i]);
                                 break;
                             }
@@ -168,64 +171,123 @@
             },
             // 添加
             handleAdd() {
-                var tempData = this.addData;
-                this.addData = '';
-                var nowDate = new Date().format("yyyy-MM-dd");
-                var level = "S";
-                var newTable = { date: nowDate, mission: tempData, level: level, editIf: false};
-                this.tableData.push(newTable);
-                this.editable.push(false);
+                this.$prompt('请输入任务', {
+                    confirmButtonText: '确定',
+                    cancelButtonText: '取消',
+                }).then(({
+                    value
+                }) => {
+                    var nowDate = new Date().format("yyyy-MM-dd");
+                    var level = "S";
+                    axios({
+                        url: '/submit',
+                        method: 'post',
+                        data: {
+                            "date": nowDate,
+                            "mission": value,
+                            "level": level
+                        }
+                    }).then((res) => {
+                        axios({
+                            url: '/readdata',
+                            method: 'get'
+                        }).then((res) => {
+                            console.log(275, res)
+                            let d = res.data.data
+                            this.tableData = d
+                        }).catch((err) => {
+                            console.log(err)
+                        })
+                        this.$message({
+                            type: 'success',
+                            message: '添加成功！'
+                        });
 
-                // 可以通过向 axios 传递相关配置来创建请求
+                    }).catch((err) => {
 
-                // 发送 POST 请求,方式,URL,数据 MVVM
-                // axios({
-                // method: 'post',
-                // url: '/user/12345',
-                // data: {
-                //     firstName: 'Fred',
-                //     lastName: 'Flintstone'
-                // }).then((res) => {
-                //     console.log(res.config.data)
-                // }).catch((err) => {
-                //     console.log(err)
-                // })
-                // // });
-
-
-                axios({
-                    url: '/submit',
-                    method: 'post',
-                    data: {"date": nowDate, "mission": tempData, "level": level}
-                }).then((res) => {
-                    console.log(res.config.data)
-                }).catch((err) => {
-                    console.log(err)
-                })
-                // console.log() 方法用于在控制台输出信息。F12 Console 显示输出的文本或者错误内容
+                    })
+                }).catch(() => {
+                    this.$message({
+                        type: 'info',
+                        message: '取消输入'
+                    });
+                });
             },
             // 删除,传递参数索引和行号,
-            handleDelete(index, rows) {
-                let nowDate = this.tableData[index].date  //这 this.tableDatr[index].date 这个数据是从哪里来的
-                let tempData = this.tableData[index].mission
-                let level = this.tableData[index].level
-                axios({
-                    url: '/deletedata',
-                    method: 'post',
-                    data: {"date": nowDate, "mission": tempData, "level": level}
-                }).then((res) => {
-                    console.log(res.config.data)
-                }).catch((err) => {
-                    console.log(err)
-                })
-                // splice() 方法可删除从index处开始的零个或多个元素,
-                // 并且用参数列表中声明的一个或多个值来替换那些被删除的元素。空值吗?
-                rows.splice(index, 1);
+            handleDelete(id) {
+                console.log(193, id)
+                this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
+                        confirmButtonText: '确定',
+                        cancelButtonText: '取消',
+                        type: 'warning'
+                    }).then((confirmButtonText) => {
+                        axios({
+                            url: '/deletedata',
+                            method: 'post',
+                            data: {
+                                "id": id
+                            }
+                        }).then(() => {
+                            this.$message({
+                                type: 'success',
+                                message: '删除成功!'
+                            });
+                            axios({
+                                url: '/readdata',
+                                method: 'get'
+                            }).then((res) => {
+                                console.log(275, res)
+                                let d = res.data.data
+                                this.tableData = d
+                            }).catch((err) => {
+                                console.log(err)
+                            })
+                        }).catch((err) => {
+                            console.log(err)
+                        })
+
+                    })
+                    .catch((cancelButtonText) => {
+                        this.$message({
+                            type: 'info',
+                            message: '已取消删除'
+                        });
+                    });
             },
+
+            // 上传图片,显示缩略图,export default 
+            uploadPic(index, Data){then((index) => {
+                        axios({
+                            url: '/readdata',
+                            method: 'get'
+                        }).then((res) => {
+                            console.log(275, res)
+                            let d = res.data.data
+                            this.tableData = d
+                        }).catch((err) => {
+                            console.log(err)
+                        })
+                        this.$message({
+                            type: 'success',
+                            message: '添加成功！'
+                        });
+
+                    }).catch((err) => {
+
+                    })
+                })
+
+            },
+
+
+
+
             // 编辑
-            handleUpdate(index, rows) {
-                Vue.set(this.editable, index, true);
-                // 解决Vue无法检测添加属性的限制,参考 https://www.runoob.com/vue2/vuejs-reactive.html
+            handleUpdate(index, Data) {
+                console.log(205, index, Data)
+                a = Vue.set(this.editable, index, true);
+                let datass = Data[index];
+                saveUpdate(index);
 
             },
             // 保存
@@ -242,89 +304,109 @@
                 axios({
                     url: '/update',
                     method: 'post',
-                    data: {"date": nowDate, "mission": tempData, "level": level, "new": upd}
-                }).then((res) => {
-                    console.log(res.config.data)
-                }).catch((err) => {
+                    data: {
+                        "id": this.tableData[index].id,
+                        "date": this.tableData[index].date,
+                        "level": this.tableData[index].level,
+                        "mission": this.tableData[index].mission
+                    },
+                }).then((res) => {}).catch((err) => {
                     console.log(err)
                 })
-                rows.splice(index, 1);
             },
             // 等级提升
             levelUp(index) {
                 let p;
-                for(let i=0;i<5;i++) {
-                    if(this.tableData[index].level == this.levelArr[i]) {
+                for (let i = 0; i < 5; i++) {
+                    if (this.tableData[index].level == this.levelArr[i]) {
                         p = i;
                     }
                 }
-                if(p!=0){
+                if (p != 0) {
                     p--;
                     this.tableData[index].level = this.levelArr[p];
+                    axios({
+                        url: '/update',
+                        method: 'post',
+                        data: {
+                            "id": this.tableData[index].id,
+                            "date": this.tableData[index].date,
+                            "level": this.tableData[index].level,
+                            "mission": this.tableData[index].mission
+                        },
+                    }).then((res) => {}).catch((err) => {
+                        console.log(err)
+                    })
                 }
 
             },
             // 等级下降
             levelDown(index) {
                 let p;
-                for(let i=0;i<5;i++) {
-                    if(this.tableData[index].level == this.levelArr[i]) {
+                for (let i = 0; i < 5; i++) {
+                    if (this.tableData[index].level == this.levelArr[i]) {
                         p = i;
                     }
                 }
-                if(p!=4) {
+                if (p != 4) {
                     p++;
                     this.tableData[index].level = this.levelArr[p];
+                    axios({
+                        url: '/update',
+                        method: 'post',
+                        data: {
+                            "id": this.tableData[index].id,
+                            "date": this.tableData[index].date,
+                            "level": this.tableData[index].level,
+                            "mission": this.tableData[index].mission
+                        },
+                    }).then((res) => {}).catch((err) => {
+                        console.log(err)
+                    })
                 }
             },
 
         },
         // 初始化
         created: function () {
-        axios({
-            url: '/readdata',
-            method: 'get'
-        }).then((res) => {
-            console.log(res)
-            let d = res.data
-            d = d.replace(/^\s*|\s*$/g,"");
-            this.getData = d.split(" ")
-            let t = []
-            for(let i=0;i<this.getData.length;i++) {
-                dic = {"date": this.getData[i], "mission": this.getData[i+1], "level": this.getData[i+2]}
-                t.push(dic)
-                this.tableData.push(dic)
-                i+=2;
-            }
-        }).catch((err) => {
-            console.log(err)
-        })
+            axios({
+                url: '/readdata',
+                method: 'get'
+            }).then((res) => {
+                let d = res.data.data
+                this.tableData = d
+
+            }).catch((err) => {
+                console.log(err)
+            })
         }
     })
     // 格式化日期
-    Date.prototype.format = function(fmt){
+    Date.prototype.format = function (fmt) {
         var o = {
-            "M+" : this.getMonth()+1,                 //月份
-            "d+" : this.getDate(),                    //日
-            "h+" : this.getHours(),                   //小时
-            "m+" : this.getMinutes(),                 //分
-            "s+" : this.getSeconds(),                 //秒
-            "q+" : Math.floor((this.getMonth()+3)/3), //季度
-            "S"  : this.getMilliseconds()             //毫秒
+            "M+": this.getMonth() + 1, //月份
+            "d+": this.getDate(), //日
+            "h+": this.getHours(), //小时
+            "m+": this.getMinutes(), //分
+            "s+": this.getSeconds(), //秒
+            "q+": Math.floor((this.getMonth() + 3) / 3), //季度
+            "S": this.getMilliseconds() //毫秒
         };
 
-        if(/(y+)/.test(fmt)){
-            fmt=fmt.replace(RegExp.$1, (this.getFullYear()+"").substr(4 - RegExp.$1.length));
+        if (/(y+)/.test(fmt)) {
+            fmt = fmt.replace(RegExp.$1, (this.getFullYear() + "").substr(4 - RegExp.$1.length));
         }
 
-        for(var k in o){
-            if(new RegExp("("+ k +")").test(fmt)){
+        for (var k in o) {
+            if (new RegExp("(" + k + ")").test(fmt)) {
                 fmt = fmt.replace(
-                    RegExp.$1, (RegExp.$1.length==1) ? (o[k]) : (("00"+ o[k]).substr((""+ o[k]).length)));
+                    RegExp.$1, (RegExp.$1.length == 1) ? (o[k]) : (("00" + o[k]).substr(("" + o[k]).length))
+                );
             }
         }
 
         return fmt;
     }
 </script>
+
 </html>

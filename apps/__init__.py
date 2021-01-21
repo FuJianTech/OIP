@@ -9,7 +9,7 @@ root_dir = os.path.abspath(os.path.join(os.path.dirname(__file__), os.pardir))
 appdir = basedir = os.path.abspath(os.path.dirname(__file__))
 
 big_config = f"{appdir}{os.sep}etc{os.sep}config.cfg"  # /apps/etc/config.cfg
-
+global_info = {}  # 全局信息
 
 def little_config():
     """
