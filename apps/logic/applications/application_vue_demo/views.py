@@ -50,11 +50,20 @@ def update():
     except Exception as ex:
         return jsonify({"rescode": -1, "resmsg": f"{ex}"})
 
-@application_vue_demo.route('/upload', methods=['GET', 'POST'])
-def upload():
+@application_vue_demo.route('/upload/tmp', methods=['GET', 'POST'])
+def upload_timestemp():
     try:
         TA = TableAnalysis()
-        result = TA.upload()
+        result = TA.upload_timestemp()
+        return jsonify({"rescode": 0, "resmsg": "上传成功", "data":result})
+    except Exception as ex:
+        return jsonify({"rescode": -1, "resmsg": f"{ex}"})
+
+@application_vue_demo.route('/upload/pic', methods=['GET', 'POST'])
+def upload_pic():
+    try:
+        TA = TableAnalysis()
+        result = TA.upload_pic()
         return jsonify({"rescode": 0, "resmsg": "上传成功", "data":result})
     except Exception as ex:
         return jsonify({"rescode": -1, "resmsg": f"{ex}"})

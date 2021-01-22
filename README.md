@@ -171,3 +171,13 @@ Agnes Obel
 - 修改vue_demo.html
 - 增减文件增删等按钮
 ![上传测试文件](http://dorians.top/usr/uploads/2021/0121/balck_eys.png)
+
+
+
+### [1.22] 2021.01.22
+- 更新上传文件到static文件夹
+- 更新上传文件函数
+- 主页面添加上传文件按钮等
+- 修改vue_demo.html
+- 数据库新增pic_path字段
+![上传](http://dorians.top/usr/uploads/2021/0122/上传文件.png)

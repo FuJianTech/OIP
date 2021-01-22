@@ -1,10 +1,10 @@
-# !/usr/bin/env python
-# -*- coding: utf-8 -*-
+# !/bin/env python
+# -*- coding=utf-8 -*-
 
 # from apps.logic.applications.application_vue_demo.database.model import *
 
-from flask import request, render_template
-
+from flask import request, render_template, jsonify
+import shutil
 from apps import appdir
 from apps.DB.sql_orm import *
 from werkzeug.utils import secure_filename
@@ -49,15 +49,43 @@ class TableAnalysis(object):
                                     "update_data": eval(data)}
                 self.OpOr.update_data(update_data_dict)
 
-    def upload(self):
+    def get_upload_path(self):
+        from apps import appdir
+        return os.path.join(appdir, "upload")
+
+    def upload_pic(self):
+        print(57)
+        data_dict = eval(request.data.decode())
+        print(59, data_dict)
+        id = data_dict.get('id')
+        temp = data_dict.get('temp')
+        update_data_dict = {"table": Todolist, "filters": Todolist.id == id,
+                            "update_data": {'pic_path': temp}}
+        self.OpOr.update_data(update_data_dict)
+
+        return '成功'
+
+    def upload_timestemp(self):
         data = request.data.decode()
+        import uuid
+
+        abs_path = ''
         if request.method == 'POST':
-            f = request.files['file']
-            print(54, f)
-            print(54, f.filename)
-            upload_path = os.path.join(appdir, r'static\uploads',
-                                       secure_filename(f.filename))  # 注意：没有的文件夹一定要先创建，不然会提示没有该路径
-            f.save(upload_path)
+            path = self.get_upload_path()
+            f = request.files
+            timestamp = str(uuid.uuid1().hex)
+            for key, value in f.items():
+                abs_path = os.path.join(path, timestamp)
+                if not os.path.exists(abs_path):
+                    os.makedirs(abs_path)
+            for key, value in f.items():
+                _, name = os.path.split(value.filename)
+                fil=open(os.path.join(abs_path, name), "wb")
+                fil.write(value.stream.read())
+                fil.close()
+            shutil.copy(os.path.join(abs_path, name),os.path.join(appdir, f'static{os.sep}uploads{os.sep}images{os.sep}{name}'))
+            return timestamp
+
 
 
 if __name__ == '__main__':
@@ -65,5 +93,5 @@ if __name__ == '__main__':
     # DA = OpOr.select_all_data(Todolist)
     # print(DA)
     pass
-    da = TableAnalysis().readdata()
+    da=TableAnalysis().readdata()
     print(da)

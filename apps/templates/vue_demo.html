@@ -9,6 +9,7 @@
     <!--    Axios 是一个基于 Promise 的 HTTP 库，可以用在浏览器和 node.js 中。-->
     <!--    使用 cdn:-->
     <!--    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>-->
+    <script src="https://ajax.aspnetcdn.com/ajax/jquery/jquery-3.5.1.min.js"></script>
     <script src="../static/js/vue.js"></script>
     <script src="../static/js/axios.min.js"></script>
     <!-- 引入样式 -->
@@ -21,7 +22,7 @@
 <body>
     <!-- 头部格式 -->
 
-
+    <input type="file" name="files" id="files" multiple='multipart' style="display: none;" />
     <div id="app">
         <!-- 这个id后面vue会用到 -->
 
@@ -95,7 +96,6 @@
 
                 <el-table-column prop="level" label="文件" width="200">
                     <template slot-scope="{row, $index}">
-
                         <!-- 为什么这里不是和上一个一样,使用v-else -->
                         ${ tableData[$index].pic_path}
                     </template>
@@ -109,11 +109,9 @@
                             @click.native.prevent="handleUpdate(scope.$index, tableData)">编辑</el-button>
                         <el-button type="primary" size="small" @click.native.prevent="handleDelete(scope.row.id)">删除
                         </el-button>
-                        <form action="/upload" enctype='multipart/form-data' method='POST'>
-                            <input type="file" name="file">
-                            <input type="submit" value="上传" style.display='none'>
-                            <!-- <el-button size="small" type="primary"
-                                @click.native.preven="uploadPic(scope.$index, tableData)">上传文件</el-button> -->
+                        <el-button size="small" type="primary"
+                            @click.native.preven="uploadPic(scope.$index, tableData)">上传文件</el-button>
+                        <!-- </form> -->
                     </template>
                 </el-table-column>
             </el-table>
@@ -144,8 +142,22 @@
             levelArr: ['SSS', 'SS', 'S', 'A', 'B'],
             searchResult: [],
             tempData: [],
+
+            dialogImageUrl: '',
+            dialogVisible: false,
+            uploadDisabled: false,
+            upurl: '127.0.0.1:5000/upload',
+            upheaders: {
+                Authorization: localStorage.getItem('AuthorizationToken')
+            },
+            fileList: [],
         },
         methods: {
+            //上传图片
+            submitUpload() {
+                console.log(175)
+                this.$refs.upload.submit()
+            },
             // 搜索查询     
             handleSearch() {
                 if (this.searchData == '') {
@@ -256,27 +268,54 @@
             },
 
             // 上传图片,显示缩略图,export default 
-            uploadPic(index, Data){then((index) => {
-                        axios({
-                            url: '/readdata',
-                            method: 'get'
-                        }).then((res) => {
-                            console.log(275, res)
-                            let d = res.data.data
-                            this.tableData = d
-                        }).catch((err) => {
-                            console.log(err)
-                        })
-                        this.$message({
-                            type: 'success',
-                            message: '添加成功！'
-                        });
+            uploadPic(index, Data) {
+                console.log(287, index, Data[index])
+                var a;
+                var b;
+                a = $('#files').click();
+                console.log(291, a);
+                $('#files').on('change', function () {
+                    // console.log(294)
+                    var up_file = $('#files')[0].files[0];
+                    // console.log(289, up_file)
+                    // var operatorId = '123';
+                    var formData = new FormData();
+                    // formData.append('id','4567894'); //需要上传的多个参数
+                    formData.append('files', up_file); //上传一个files对象
 
-                    }).catch((err) => {
+                    // console.log(formData)
+
+                    console.log(301, formData)
+                    $.ajax({ //jQuery方法，此处可以换成其它请求方式
+                        url: '/upload/tmp',
+                        type: "POST",
+                        data: formData,
+                        processData: false, //不去处理发送的数据
+                        contentType: false, //不去设置Content-Type请求头
+                        success: function (data) {
+                            if (data.rescode == 0) {
+                                axios({
+                                    url: '/upload/pic',
+                                    method: 'post',
+                                    data: {
+                                        "id": Data[index].id,
+                                        "temp": data.data,
+                                    },
+                                }).then((res) => {
+                                    console.log(321, res.data)
+                                    if (res.data.rescode == 0) {
+                                        console.log(322)
+                                        alert('添加成功')
+                                    }
+                                }).catch((err) => {
+                                    console.log(err)
+                                })
+                            }
+                            return;
+                        }
 
                     })
                 })
-
             },
 
 
@@ -373,6 +412,7 @@
                 url: '/readdata',
                 method: 'get'
             }).then((res) => {
+                console.log(275, res)
                 let d = res.data.data
                 this.tableData = d
 
