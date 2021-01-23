@@ -17,6 +17,7 @@
     <!-- 引入组件库 -->
     <script src="../static/js/index.js"></script>
 
+
 </head>
 
 <body>
@@ -56,7 +57,7 @@
             <!-- 当el-table元素中注入data对象数组后，
             在el-table-column中用prop属性来对应对象中的键名即可填入数据，
             用label属性来定义表格的列名。可以使用width属性来定义列宽。 -->
-            <el-table :data="tableData" border style="width: 100%">
+            <el-table :data="tableData" style="width: 100%">
                 <el-table-column prop="date" label="日期" width="200">
                 </el-table-column>
 
@@ -97,7 +98,11 @@
                 <el-table-column prop="level" label="文件" width="200">
                     <template slot-scope="{row, $index}">
                         <!-- 为什么这里不是和上一个一样,使用v-else -->
-                        ${ tableData[$index].pic_path}
+                        <!-- var src="http://192.168.15.160:5020/"+${ tableData[$index].pic_path} -->
+
+                        <!-- ${ tableData[$index].pic_path} -->
+                        <img width="100px" style="margin-left: 21%;" height="80px" :src="getPictureUrl(row.pic_path)" alt="">
+                        <!-- </el-dialog> -->
                     </template>
 
                 </el-table-column>
@@ -109,7 +114,7 @@
                             @click.native.prevent="handleUpdate(scope.$index, tableData)">编辑</el-button>
                         <el-button type="primary" size="small" @click.native.prevent="handleDelete(scope.row.id)">删除
                         </el-button>
-                        <el-button size="small" type="primary"
+                        <el-button size="small" type="primary" name="avatar"
                             @click.native.preven="uploadPic(scope.$index, tableData)">上传文件</el-button>
                         <!-- </form> -->
                     </template>
@@ -121,6 +126,7 @@
 </body>
 <!-- vue 入口 -->
 <script>
+    
     // el 参数
     // data 用于定义属性,类似于字段.初始化的
     // methods 用于定义的函数，可以通过 return 来返回函数值
@@ -153,10 +159,22 @@
             fileList: [],
         },
         methods: {
+
+            getData() {
+                this.tableData = res.data
+            },
+
+
+            getPictureUrl(picUrl) {
+                let url = "http://192.168.15.160:5020/" + picUrl
+                return url
+            },
+
             //上传图片
             submitUpload() {
                 console.log(175)
                 this.$refs.upload.submit()
+                this.getData()
             },
             // 搜索查询     
             handleSearch() {
@@ -299,7 +317,7 @@
                                     method: 'post',
                                     data: {
                                         "id": Data[index].id,
-                                        "temp": data.data,
+                                        "picname": data.data,
                                     },
                                 }).then((res) => {
                                     console.log(321, res.data)

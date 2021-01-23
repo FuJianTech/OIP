@@ -45,6 +45,7 @@ class TableAnalysis(object):
         data = request.data.decode()
         if request.method == 'POST':
             if data != '':
+
                 update_data_dict = {"table": Todolist, "filters": Todolist.id == eval(data).get("id"),
                                     "update_data": eval(data)}
                 self.OpOr.update_data(update_data_dict)
@@ -58,9 +59,11 @@ class TableAnalysis(object):
         data_dict = eval(request.data.decode())
         print(59, data_dict)
         id = data_dict.get('id')
-        temp = data_dict.get('temp')
+        pic_name = data_dict.get('picname')
+        pic_path = f'\static{os.sep}uploads{os.sep}images{os.sep}{pic_name}'
+        # pic_path = "192.168.15.160:8020" + pic_path
         update_data_dict = {"table": Todolist, "filters": Todolist.id == id,
-                            "update_data": {'pic_path': temp}}
+                            "update_data": {'pic_path': pic_path}}
         self.OpOr.update_data(update_data_dict)
 
         return '成功'
@@ -73,8 +76,13 @@ class TableAnalysis(object):
         if request.method == 'POST':
             path = self.get_upload_path()
             f = request.files
+            name = f["files"]
+            print(76,f["files"],type(f["files"]))
             timestamp = str(uuid.uuid1().hex)
             for key, value in f.items():
+                print(78,key,value)
+
+
                 abs_path = os.path.join(path, timestamp)
                 if not os.path.exists(abs_path):
                     os.makedirs(abs_path)
@@ -84,7 +92,8 @@ class TableAnalysis(object):
                 fil.write(value.stream.read())
                 fil.close()
             shutil.copy(os.path.join(abs_path, name),os.path.join(appdir, f'static{os.sep}uploads{os.sep}images{os.sep}{name}'))
-            return timestamp
+            # return timestamp,name
+            return name
 
 
 

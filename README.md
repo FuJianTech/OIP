@@ -181,3 +181,16 @@ Agnes Obel
 - 修改vue_demo.html
 - 数据库新增pic_path字段
 ![上传](http://dorians.top/usr/uploads/2021/0122/上传文件.png)
+
+
+  
+### [1.22] 2021.01.22
+- 图片预览功能实现
+- 数据库存储显示路径
+- vue函数绑定事件
+- 看我的卡姿兰大眼圈
+- (⓿_⓿) 
+(⓿_⓿)
+(⓿_⓿)
+(⓿_⓿)
+![图片预览](http://dorians.top/usr/uploads/2021/0123/图片添加成功.png)
