@@ -204,4 +204,30 @@ Agnes Obel
 - 片云自孤远，丛筱亦清深。
 - 无事由来贵，方知物外心
 
+### [2.01] 2021.02.08
 
+- 更新文件夹FO(文件操作)File operation
+- 更新 file_operate.py
+- 将文件夹下的文件已后缀名的方式移动到各自的文件夹
+- 待做,判断文件是否存在目标文件
+- 待做,剪切文件
+- 说明: 如我有一个老师.doc
+  - 新建文件夹doc 
+  - 我有一个老师.doc 放到doc文件夹
+  
+- 代码
+![代码](http://dorians.top/usr/uploads/2021/0208/代码.jpg)
+  
+图前
+![图前](http://dorians.top/usr/uploads/2021/0208/图前.jpg)
+
+图后1
+![图后1](http://dorians.top/usr/uploads/2021/0208/图后1.jpg)
+图后2
+![图后2](http://dorians.top/usr/uploads/2021/0208/图后2.jpg)
+
+- 主要用途
+  - 将个人硬盘视频文本音乐等分类
+  - 个人文档 txt excel pdf 按文件夹分类
+  - 目前还未打算做带时间分类文件夹
+  - 后续会考虑将图片添加日期 如 华山树木202002081518.png
