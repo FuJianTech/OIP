@@ -231,3 +231,14 @@ Agnes Obel
   - 个人文档 txt excel pdf 按文件夹分类
   - 目前还未打算做带时间分类文件夹
   - 后续会考虑将图片添加日期 如 华山树木202002081518.png
+
+
+### [2.01] 2021.02.18
+
+文件分类
+支持多种后缀名
+软件链接
+http://www.dropitproject.com/
+自动分类包 详情解释 https://zhuanlan.zhihu.com/p/45275359
+自动分类包 详情解释1 https://zhuanlan.zhihu.com/p/90621173
+软件来源于网络
